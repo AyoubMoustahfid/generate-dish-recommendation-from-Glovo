@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Main API service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: glovo-scraper-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      GLOVO_BASE_URL: https://glovoapp.com
+      DEFAULT_LOCATION: "Casablanca, Morocco"
+      HEADLESS_BROWSER: "false"
+      BROWSER_TIMEOUT: 30000
+      SCROLL_ATTEMPTS: 20
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - ./data:/app/data
+      - ./assets/screenshots:/app/assets/screenshots
+    restart: unless-stopped
+    networks:
+      - glovo-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/stores', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  glovo-network:
+    driver: bridge
+
+volumes:
+  scraper-data:
+    driver: local
+  screenshots:
+    driver: local
