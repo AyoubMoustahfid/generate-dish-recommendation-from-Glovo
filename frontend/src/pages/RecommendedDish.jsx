@@ -140,43 +140,45 @@ function RecommendedDish() {
     const activeStats = getActiveStats()
 
     return (
-        <main className="container mx-auto pt-8 bg-background-50 dark:bg-background-950 h-full min-h-screen px-4">
+        <main className="container mx-auto pt-8 bg-neutral-200/50 dark:bg-background-950 h-full min-h-screen px-4">
             <header className="text-center mb-10">
                 <h1 className="text-text-900 dark:text-text-50 text-4xl md:text-6xl font-bold mb-3">
                     Dish Recommendations
                 </h1>
-                <p className="text-text-700 dark:text-text-200 text-sm md:text-base font-light mb-6 max-w-2xl mx-auto">
+                <p className="text-text-700 dark:text-text-100 text-sm md:text-base font-medium mb-6 max-w-xl mx-auto">
                     Find the perfect combination of dishes from different restaurants that fit your budget and preferences.
                 </p>
 
                 {/* Statistics Banner */}
                 {activeStats && (
-                    <div className="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-950/20 dark:to-secondary-950/20 rounded-xl p-4 mb-6 max-w-4xl mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className={`bg-background-100 dark:bg-background-900 rounded-xl p-4 mb-6 max-w-4xl mx-auto border-2 border-accent-200 dark:border-accent-100
+                            ${(currentStats || budgetSuggestions) && 'divide-y divide-accent-200'}
+                        `}>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 divide-x divide-accent-200 pb-3">
                             {/* Initial Statistics */}
                             {!currentStats ? (
                                 <>
-                                    <div className="text-center">
+                                    <div className="flex flex-col items-center px-2">
                                         <p className="text-sm text-text-600 dark:text-text-300">Available Stores</p>
                                         <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
                                             {activeStats.total_stores || "N/A"}
                                         </p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="flex flex-col items-center px-2">
                                         <p className="text-sm text-text-600 dark:text-text-300">Total Dishes</p>
                                         <p className="text-2xl font-bold text-accent-600 dark:text-accent-400">
                                             {activeStats.total_dishes || "N/A"}
                                         </p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="flex flex-col items-center px-2">
                                         <p className="text-sm text-text-600 dark:text-text-300">Price Range</p>
-                                        <p className="text-lg font-semibold text-secondary-600 dark:text-secondary-400">
+                                        <p className="text-base font-semibold text-secondary-600 dark:text-secondary-400">
                                             {activeStats.price_range?.min || "N/A"} - {activeStats.price_range?.max || "N/A"}
                                         </p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="flex flex-col items-center px-2">
                                         <p className="text-sm text-text-600 dark:text-text-300">Average Price</p>
-                                        <p className="text-lg font-semibold text-accent-600 dark:text-accent-400">
+                                        <p className="text-base font-semibold text-accent-600 dark:text-accent-400">
                                             {activeStats.price_range?.avg || "N/A"}
                                         </p>
                                     </div>
@@ -214,22 +216,22 @@ function RecommendedDish() {
 
                         {/* Additional Current Stats */}
                         {currentStats && (
-                            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <div className="text-center">
+                            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3 divide-x divide-accent-200">
+                                <div className="text-center px-2">
                                     <p className="text-xs text-text-600 dark:text-text-300">Processing Time</p>
-                                    <p className="text-sm font-medium text-text-700 dark:text-text-300">
+                                    <p className="text-sm font-semibold text-text-700 dark:text-text-300">
                                         {processingTime || "0"} ms
                                     </p>
                                 </div>
-                                <div className="text-center">
+                                <div className="text-center px-2">
                                     <p className="text-xs text-text-600 dark:text-text-300">Minimum Residual</p>
-                                    <p className="text-sm font-medium text-green-600 dark:text-green-400">
+                                    <p className="text-sm font-semibold text-green-600 dark:text-green-400">
                                         {currentStats.min_residual || "N/A"}
                                     </p>
                                 </div>
-                                <div className="text-center">
+                                <div className="text-center px-2">
                                     <p className="text-xs text-text-600 dark:text-text-300">Maximum Residual</p>
-                                    <p className="text-sm font-medium text-secondary-600 dark:text-secondary-400">
+                                    <p className="text-sm font-semibold text-secondary-600 dark:text-secondary-400">
                                         {currentStats.max_residual || "N/A"}
                                     </p>
                                 </div>
@@ -249,7 +251,7 @@ function RecommendedDish() {
 
             <article className="space-y-10">
                 {/* Form Section */}
-                <section className="bg-background-100 dark:bg-background-900 rounded-xl p-6 shadow-lg">
+                <section className="bg-background-100 dark:bg-background-900 rounded-xl p-6 shadow-lg border-2 border-accent-200 dark:border-accent-100">
                     <form onSubmit={createRecommendations}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center mb-6">
                             <div>
@@ -353,8 +355,8 @@ function RecommendedDish() {
                         )}
 
                         {successMessage && (
-                            <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-                                <p className="text-green-600 dark:text-green-400 flex items-center">
+                            <div className="mb-4 p-3 bg-green-200/55 dark:bg-green-900/20 border-2 border-green-400 dark:border-green-800 rounded-lg">
+                                <p className="text-green-600 dark:text-green-400 flex items-center font-semibold">
                                     <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                     </svg>
@@ -402,7 +404,7 @@ function RecommendedDish() {
                     ) : results.length > 0 ? (
                         <>
                             {/* Results Summary */}
-                            <div className="bg-gradient-to-r from-secondary-50 to-accent-50 dark:from-secondary-950/20 dark:to-accent-950/20 rounded-xl p-4">
+                            <div className="border-2 border-accent-200 bg-background-100 dark:bg-background-800 rounded-xl p-4">
                                 <div className="flex flex-wrap items-center justify-between">
                                     <div>
                                         <h3 className="text-lg font-semibold text-text-800 dark:text-text-50">
@@ -414,21 +416,21 @@ function RecommendedDish() {
                                     </div>
                                     <div className="flex gap-4">
                                         <div className="text-center">
-                                            <p className="text-sm text-text-600 dark:text-text-300">Total Budget</p>
+                                            <p className="text-sm text-text-600 dark:text-text-300 font-semibold">Total Budget</p>
                                             <p className="text-lg font-bold text-primary-600 dark:text-primary-400">
                                                 {formData.budget}
                                             </p>
                                         </div>
                                         <div className="text-center">
-                                            <p className="text-sm text-text-600 dark:text-text-300">Target Plates</p>
+                                            <p className="text-sm text-text-600 dark:text-text-300 font-semibold">Target Plates</p>
                                             <p className="text-lg font-bold text-accent-600 dark:text-accent-400">
                                                 {formData.numPlates}
                                             </p>
                                         </div>
                                         {currentStats && (
                                             <div className="text-center">
-                                                <p className="text-sm text-text-600 dark:text-text-300">Processing Time</p>
-                                                <p className="text-lg font-medium text-accent-600 dark:text-accent-400">
+                                                <p className="text-sm text-text-600 dark:text-text-300 font-semibold">Processing Time</p>
+                                                <p className="text-lg font-bold text-accent-600 dark:text-accent-400">
                                                     {processingTime} ms
                                                 </p>
                                             </div>
