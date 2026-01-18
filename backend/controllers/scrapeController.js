@@ -11,7 +11,7 @@ async function scrapeGlovoStore(storeUrl, storeName) {
 
         // Launch browser
         browser = await puppeteer.launch({
-            headless: false, // Keep visible to debug
+            headless: process.env.HEADLESS_BROWSER !== 'false', // Use headless mode by default for Docker
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
